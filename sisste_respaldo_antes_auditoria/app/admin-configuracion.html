@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISSTe - Configuración</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/solicitud-panel.css">
+    <link rel="stylesheet" href="/css/admin-users.css">
+
+    <style>
+        html, body { height: 100%; }
+        body { overflow: hidden; }
+
+        .config-shell {
+            display: flex;
+            height: calc(100vh - 90px);
+            background-color: rgba(15, 23, 42, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            margin: 0 24px 24px 24px;
+        }
+
+        /* --- Panel izquierdo: lista de secciones (estilo lista de chats) --- */
+        .config-sidebar {
+            width: 320px;
+            min-width: 280px;
+            background-color: rgba(15, 23, 42, 0.7);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+        }
+        .config-sidebar-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        .config-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background-color 0.15s;
+            color: #e2e8f0;
+        }
+        .config-item:hover { background-color: rgba(56, 189, 248, 0.08); }
+        .config-item.activo {
+            background-color: rgba(56, 189, 248, 0.15);
+            border-left: 3px solid #38bdf8;
+        }
+        .config-item-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0d9488, #0ea5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        .config-item-texto { flex-grow: 1; }
+        .config-item-titulo { font-weight: 600; font-size: 0.95rem; }
+        .config-item-subtitulo { font-size: 0.78rem; color: #94a3b8; }
+
+        /* --- Panel derecho: detalle de la sección seleccionada --- */
+        .config-detalle {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 28px 32px;
+        }
+        .config-detalle-vacio {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #64748b;
+            text-align: center;
+        }
+        .config-detalle-vacio i { font-size: 3.5rem; margin-bottom: 16px; opacity: 0.4; }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        .item-row.inactivo { opacity: 0.5; }
+        .badge-texto-libre {
+            font-size: 0.7rem;
+            background-color: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+        .rol-core-badge {
+            font-size: 0.7rem;
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid #f87171;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .categoria-card {
+            background-color: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .categoria-card.inactiva { opacity: 0.5; }
+        .categoria-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .subcategoria-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(15, 23, 42, 0.6);
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+        }
+        .subcategoria-row.inactiva { opacity: 0.5; }
+        .tipo-badge {
+            font-size: 0.7rem;
+            background-color: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-right: 8px;
+        }
+
+        .config-detalle .form-check-label {
+            color: #ffffff !important;
+        }
+        .config-detalle .form-check-input:checked {
+            background-color: #0ea5e9;
+            border-color: #0ea5e9;
+        }
+
+        @media (max-width: 700px) {
+            .config-shell { flex-direction: column; height: auto; margin: 0 12px 12px 12px; }
+            .config-sidebar { width: 100%; max-height: 240px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid mt-3">
+        <h1 class="titulo-neon">Configuración del Sistema</h1>
+
+        <div class="d-flex justify-content-end px-4 mb-3">
+            <a href="/admin-users.html" class="btn btn-outline-light btn-sm shadow me-2">
+                <i class="bi bi-arrow-left me-1"></i> Volver a Usuarios
+            </a>
+            <div class="me-3 text-white d-flex align-items-center">
+                <i class="bi bi-person-badge me-2 text-info"></i>
+                <span id="nombreUsuarioNavbar" class="small fw-bold">Administrador</span>
+            </div>
+            <button onclick="window.cerrarSesion()" class="btn btn-danger btn-sm shadow">Cerrar Sesión</button>
+        </div>
+
+        <div class="config-shell">
+            <div class="config-sidebar" id="configSidebar">
+                <div class="config-sidebar-header">Secciones</div>
+                <!-- Los items se pintan por JS -->
+            </div>
+            <div class="config-detalle" id="configDetalle">
+                <div class="config-detalle-vacio">
+                    <i class="bi bi-gear"></i>
+                    <p>Selecciona una sección de la izquierda<br>para ver y editar sus opciones.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/admin-configuracion.js"></script>
+</body>
+</html>

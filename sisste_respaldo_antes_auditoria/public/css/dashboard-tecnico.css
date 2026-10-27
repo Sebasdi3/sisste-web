@@ -1,0 +1,236 @@
+/* Este archivo depende de las variables definidas en base.css */
+
+/* ================================================= */
+/* 1. ESTILOS DE WIDGETS DE KPI (TÉCNICO) */
+/* ================================================= */
+
+.widget-card {
+    border-radius: var(--box-border-radius);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    /* Usamos el box-shadow que usted proporcionó */
+    box-shadow: 0 4px 10px rgba(36, 198, 226, 0.767); 
+    color: white; 
+    transition: transform 0.3s ease;
+}
+
+.widget-card h4 {
+    font-size: 1rem;
+    font-weight: 300;
+    opacity: 0.8;
+}
+.widget-card p {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* 1. Widgets Asignados (Neón Principal) */
+.widget-asignados {
+    background: linear-gradient(135deg, var(--color-neon-blue) 0%, var(--color-neon-violet) 50%, var(--color-neon-blue) 100%);
+    background-size: 400% 400%; 
+    /* Usamos el tiempo de animación que usted proporcionó */
+    animation: neon-diagonal-shift 6s linear infinite; 
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+.widget-asignados::before {
+    content: "";
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px; 
+    background-color: #1a1a1a; 
+    border-radius: calc(var(--box-border-radius) - 1px);
+    z-index: 2;
+}
+.widget-asignados h4, .widget-asignados p {
+    position: relative;
+    z-index: 3;
+    color: white;
+}
+.widget-asignados p {
+    color: var(--color-neon-blue);
+}
+
+/* 2. Widgets En Cola (Advertencia - Su estilo) */
+.widget-cola {
+    background-color: #9f3607; 
+    border: 1px solid #ff7f41;
+}
+
+/* 3. Widgets Resueltos (Éxito - Su estilo) */
+.widget-resueltos {
+    background-color: #1a5c2d; 
+    border: 1px solid #198754;
+}
+
+/* 4. Widgets SOLICITUDES DEL MES (ACTUALIZADO - Reemplaza widget-tiempo) */
+.widget-mes {
+    /* Mantenemos el estilo neón vibrante */
+    background-color: #002d53; 
+    border: 2px solid var(--color-neon-blue); 
+    box-shadow: 0 0 15px rgba(27, 180, 180, 0.7); 
+}
+.widget-mes p {
+    color: #4dfcfc; 
+}
+
+
+/* ================================================= */
+/* 2. BARRA DE FILTROS (Su estilo) */
+/* ================================================= */
+
+.card-filter {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: var(--box-border-radius);
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-filter input, .card-filter select {
+    background-color: rgba(92, 137, 148, 0.966); 
+    color: rgb(0, 0, 0);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ================================================= */
+/* 3. TABLA DE SOLICITUDES GLOBAL (Su estilo) */
+/* ================================================= */
+
+.card-table-container {
+    background-color: rgba(0, 0, 0, 0.4); 
+    border-radius: var(--box-border-radius);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(27, 180, 180, 0.3); 
+}
+
+.dashboard-table-tecnico {
+    margin-bottom: 0;
+    color: white; 
+}
+
+.dashboard-table-tecnico thead th {
+    border-bottom: 2px solid var(--color-neon-blue); 
+    color: var(--color-neon-blue);
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-table-tecnico tbody tr {
+    transition: background-color 0.3s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilo de fila al pasar el ratón (Su estilo) */
+.dashboard-table-tecnico tbody tr:hover {
+    background-color: rgba(27, 180, 180, 0.1); 
+    cursor: pointer;
+}
+
+/* Estilos de botones de acción en la tabla (Su estilo) */
+.btn-sm {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+}
+
+/* ================================================= */
+/* 4. INTERACCIÓN Y FILA EXPANDIBLE (Funcionalidad de la Vista) */
+/* ================================================= */
+
+/* Fila principal del ticket */
+.dashboard-table-tecnico tbody .ticket-row {
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-table-tecnico tbody .ticket-row:hover {
+    background-color: rgba(27, 180, 180, 0.15); /* Resaltado más fuerte al pasar el ratón */
+    box-shadow: 0 0 5px rgba(27, 180, 180, 0.5);
+}
+
+/* Botones de acción */
+.action-btn-accept {
+    background-color: #28a745; 
+    border-color: #28a745;
+}
+.action-btn-close {
+    background-color: #dc3545; 
+    border-color: #dc3545;
+}
+
+/* Fila que contiene el colapsable */
+.collapse-row td {
+    border-top: none !important;
+    padding: 0 !important;
+}
+
+/* Contenido de la Vista Previa (El 'drawer') */
+.summary-preview {
+    background-color: rgba(30, 30, 50, 0.9); /* Fondo oscuro más denso */
+    color: white;
+    border-top: 2px solid var(--color-neon-blue); /* Línea divisoria neón */
+    padding: 15px 30px !important;
+}
+
+.summary-preview h5 {
+    color: var(--color-neon-blue);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.summary-preview p {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+}
+
+/* ================================================= */
+/* 5. RESPONSIVE (Móvil) (Su estilo) */
+/* ================================================= */
+
+@media (max-width: 768px) {
+    /* Mantiene los widgets, pero transforma la tabla */
+    
+    .dashboard-table-tecnico thead {
+        display: none; 
+    }
+
+    .dashboard-table-tecnico tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .dashboard-table-tecnico tbody td {
+        display: block;
+        text-align: right;
+        padding-left: 50%; 
+        position: relative;
+    }
+
+    .dashboard-table-tecnico tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--color-neon-blue);
+    }
+    
+    /* Ajuste de la barra de filtros en móvil */
+    .filter-bar .row > div {
+        margin-bottom: 10px;
+    }
+    
+    /* Aseguramos que el contenido del resumen se muestre bien en móvil */
+    .summary-preview {
+        padding: 10px 15px !important;
+    }
+    .summary-preview h5, .summary-preview p {
+        text-align: left;
+    }
+}

@@ -1,0 +1,222 @@
+/* Este archivo depende de las variables definidas en base.css */
+
+/* ================================================= */
+/* 1. LAYOUT DEL PANEL DIVIDIDO (AJUSTE DE ALTURA) */
+/* ================================================= */
+
+.panel-container {
+    padding: 0 40px; /* Padding horizontal para el contenedor fluido */
+}
+
+.panel-content-row {
+    margin: 0 -15px; 
+    
+    /* === FLEXBOX PARA IGUALAR LA ALTURA === */
+    display: flex;
+    align-items: stretch; /* Asegura que los elementos hijos se estiren a la altura máxima */
+    min-height: calc(100vh - 200px); /* Altura mínima para que no sea muy pequeño */
+}
+
+/* Títulos de las secciones */
+.panel-left h3, .panel-right h3 {
+    color: var(--color-neon-blue);
+    font-weight: 600;
+}
+
+/* Ajuste del formulario (60%) */
+.panel-left {
+    padding-right: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1); 
+    
+    /* Necesario para que la tarjeta interna crezca */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ajuste del historial (40%) */
+.panel-right {
+    padding-left: 20px;
+    /* Necesario para que la tarjeta interna crezca */
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================================================= */
+/* 2. ESTILOS DEL FORMULARIO (Columna Izquierda) */
+/* ================================================= */
+
+/* La tarjeta que envuelve el formulario (Borde Neón) */
+.card-neon-border-form {
+    border: none;
+    padding: 0;
+    position: relative;
+    overflow: visible; 
+    width: 100%;
+    
+    /* El fondo de la CARD es el MARCO NEÓN ANIMADO */
+    background: linear-gradient(135deg, var(--color-neon-blue) 0%, var(--color-neon-violet) 50%, var(--color-neon-blue) 100%);
+    background-size: 400% 400%; 
+    animation: neon-diagonal-shift 8s linear infinite; 
+    
+    border-radius: var(--box-border-radius); 
+    box-shadow: 0 0 15px rgba(27, 180, 180, 0.7), 0 0 15px rgba(139, 8, 139, 0.7); 
+    
+    /* Permite que la tarjeta crezca y ocupe el espacio restante */
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* Máscara interna GRIS CENIZA */
+.card-neon-border-form::before {
+    content: "";
+    position: absolute;
+    top: 10px; left: 10px; right: 10px; bottom: 10px; 
+    background-color: var(--color-box-bg); 
+    border-radius: calc(var(--box-border-radius) - 1px); 
+    z-index: 1; 
+    pointer-events: none;
+}
+
+/* Contenido de la Tarjeta */
+.card-content {
+    position: relative; 
+    z-index: 2; 
+    color: var(--color-text);
+    padding: 25px; 
+    display: flex;
+    flex-direction: column;
+    
+    flex-grow: 1; /* Permite que el contenido se estire dentro de la tarjeta */
+}
+
+/* Estilos de inputs y selectores */
+.card-content label {
+    font-weight: bold;
+}
+
+.card-content select, .card-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0; 
+    background-color: rgba(92, 137, 148, 0.966); 
+    color: rgb(0, 0, 0);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-sizing: border-box;
+}
+
+/* Estilo del Botón */
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    padding: 12px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+.btn-primary:hover {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+/* ================================================= */
+/* 3. ESTILOS DEL HISTORIAL (Columna Derecha) */
+/* ================================================= */
+
+.historial-card {
+    background-color: rgba(0, 0, 0, 0.4); 
+    border: 1px solid rgba(27, 180, 180, 0.5); 
+    border-radius: var(--box-border-radius);
+    
+    /* === Permite que la tarjeta de historial crezca === */
+    flex-grow: 1; 
+    
+    /* Aseguramos que el contenido interno de la tabla también se adapte */
+    display: flex;
+    flex-direction: column;
+}
+
+.historial-card .card-body {
+    padding: 20px;
+    flex-grow: 1; /* Asegura que el cuerpo de la tarjeta crezca */
+}
+
+.historial-table {
+    margin-bottom: 0;
+    color: white;
+}
+
+.historial-table thead th {
+    border-bottom: 2px solid var(--color-neon-blue); 
+    color: var(--color-neon-blue);
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.historial-table tbody tr {
+    transition: background-color 0.3s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.historial-table tbody tr:hover {
+    background-color: rgba(27, 180, 180, 0.1);
+    cursor: pointer;
+}
+
+/* Colores de Estado de las Filas */
+.historial-table .estado-atendida {
+    opacity: 0.8; 
+}
+.solicitudForm{
+    background:rgba(185, 179, 179, 0.685)
+}
+
+/* ================================================= */
+/* 4. RESPONSIVE (Móvil) */
+/* ================================================= */
+
+@media (max-width: 992px) {
+    /* En pantallas medianas y pequeñas, se apilan verticalmente */
+    .panel-content-row {
+        display: block; /* Desactiva Flexbox */
+        min-height: auto;
+    }
+    .panel-left, .panel-right {
+        border-right: none;
+        padding-right: 15px;
+        padding-left: 15px;
+        display: block;
+    }
+    .panel-right {
+        margin-top: 40px; /* Separación entre el formulario y el historial */
+    }
+}
+
+/* Estilos para la tabla en móvil (similar al dashboard) */
+@media (max-width: 768px) {
+    .historial-table thead {
+        display: none; 
+    }
+    .historial-table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 10px;
+    }
+    .historial-table tbody td {
+        display: block;
+        text-align: right;
+        padding-left: 50%; 
+        position: relative;
+    }
+    .historial-table tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--color-neon-blue);
+    }
+}

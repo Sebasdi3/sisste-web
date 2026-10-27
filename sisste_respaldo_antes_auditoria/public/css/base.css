@@ -1,0 +1,129 @@
+/* ==========================================================================
+   COLORES: AGUA MARINA A AZUL MARINO
+   ========================================================================== */
+:root {
+    --agua-marina: #0ea5e9;      /* Cyan / Agua Marina */
+    --azul-marino: #0f172a;      /* Azul Marino profundo */
+    --panel-glass: rgba(30, 41, 59, 0.7); /* Fondo de panel semitransparente */
+    --accent-blue: #38bdf8;      /* Azul brillante para acentos */
+    --border-color: rgba(255, 255, 255, 0.2);
+}
+
+body {
+    /* Degradado de Agua Marina a Azul Marino */
+    background: linear-gradient(135deg, #0d9488 0%, #0f172a 100%);
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   PANELES Y TARJETAS
+   ========================================================================== */
+.card {
+    background-color: var(--panel-glass) !important;
+    backdrop-filter: blur(8px); /* Efecto cristal */
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.titulo-neon {
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--agua-marina);
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px;
+}
+.acronimo {
+    text-align: center;
+    color: #bdb5b5;
+    text-shadow: 0 0 10px var(--agua-marina);
+}
+
+/* ==========================================================================
+   FORMULARIOS Y SELECCIONES (TEXTO BLANCO Y FONDO NÍTIDO)
+   ========================================================================== */
+.form-control, .form-select {
+    background-color: rgba(15, 23, 42, 0.6) !important; /* Fondo marino oscuro */
+    border: 1px solid var(--border-color) !important;
+    color: #ffffff !important; /* Texto de selección en blanco puro */
+    font-weight: 400;
+}
+
+/* Estilo para las opciones dentro del select */
+.form-select option {
+    background-color: #0f172a;
+    color: #ffffff;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   CONFIGURACIÓN DE DATATABLES
+   ========================================================================== */
+.dataTables_wrapper .dataTables_info, 
+.dataTables_wrapper .dataTables_length, 
+.dataTables_wrapper .dataTables_filter label {
+    color: #e2e8f0 !important; /* Texto claro */
+}
+
+/* Inputs de búsqueda y cantidad */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    background-color: rgba(15, 23, 42, 0.8) !important;
+    border: 1px solid var(--border-color) !important;
+    color: #ffffff !important;
+    border-radius: 6px;
+}
+
+/* Paginación */
+.page-link {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+    border: 1px solid var(--border-color) !important;
+    color: #38bdf8 !important;
+}
+
+.page-item.active .page-link {
+    background-color: var(--agua-marina) !important;
+    border-color: var(--agua-marina) !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   TABLA
+   ========================================================================== */
+.table {
+    color: #ffffff !important;
+}
+
+.table thead th {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid var(--border-color) !important;
+    color: var(--accent-blue);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(13, 148, 136, 0.2) !important; /* Hover color agua marina */
+}
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
+.btn-primary {
+    background: linear-gradient(90deg, #0d9488, #0ea5e9) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}

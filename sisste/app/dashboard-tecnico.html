@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard T&eacute;cnico - SISSTe</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/dashboard-tecnico.css">
+
+    <style>
+        .fc-equipo-row {
+            background-color: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+        .fc-equipo-row .btn-quitar-equipo {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+        }
+        .fc-equipo-row input {
+            font-size: 0.85rem;
+        }
+        body { background-color: #0f172a; color: white; min-height: 100vh; }
+        .card { background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; }
+        
+        .dataTables_wrapper .dataTables_length select {
+            background-color: #1e293b !important;
+            color: #38bdf8 !important;
+            border: 1px solid #334155 !important;
+            border-radius: 5px;
+            padding: 4px 25px 4px 8px;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            background-color: #1e293b !important;
+            color: white !important;
+            border: 1px solid #334155 !important;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            color: #94a3b8 !important;
+            font-size: 0.9rem;
+        }
+
+        .pagination .page-link {
+            background-color: #1e293b !important;
+            border: 1px solid #334155 !important;
+            color: #38bdf8 !important;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #38bdf8 !important;
+            border-color: #38bdf8 !important;
+            color: #0f172a !important;
+            font-weight: bold;
+        }
+
+        .table-secondary { background-color: #334155 !important; color: #f8fafc !important; }
+        .table-hover tbody tr:hover { background-color: rgba(56, 189, 248, 0.05) !important; }
+
+        .swal2-popup {
+            border: 1px solid rgba(56, 189, 248, 0.4) !important;
+            background-color: #1e293b !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid px-4 pb-5"> 
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+            <h1 class="text-white h3 m-0">
+                <i class="bi bi-gear-fill text-info me-2"></i>Dashboard Gesti&oacute;n T&eacute;cnica
+            </h1>
+            
+            <div class="d-flex align-items-center">
+                <a href="/reportes.html" class="btn btn-outline-info btn-sm px-3 shadow-sm me-3">
+                    <i class="bi bi-file-earmark-bar-graph me-1"></i> Reportes
+                </a>
+                <span id="nombreUsuarioNavbar" class="text-white me-3 fw-bold border-end pe-3 border-secondary d-none d-md-inline text-uppercase small">
+                    Cargando...
+                </span>
+                <button onclick="cerrarSesion()" class="btn btn-danger btn-sm px-3 shadow-sm">
+                    <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesi&oacute;n
+                </button>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="card p-3 shadow-sm border-start border-4 border-primary">
+                    <small class="text-uppercase text-secondary fw-bold">Asignados</small>
+                    <div id="ticketsAsignados" class="h2 fw-bold m-0 text-white">0</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="card p-3 shadow-sm border-start border-4 border-warning">
+                    <small class="text-uppercase text-secondary fw-bold">En Espera</small>
+                    <div id="ticketsCola" class="h2 fw-bold m-0 text-white">0</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="card p-3 shadow-sm border-start border-4 border-success">
+                    <small class="text-uppercase text-secondary fw-bold">Resueltos Hoy</small>
+                    <div id="ticketsResueltosHoy" class="h2 fw-bold m-0 text-white">0</div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="card p-3 shadow-sm border-start border-4 border-info">
+                    <small class="text-uppercase text-secondary fw-bold">Total Mes</small>
+                    <div id="solicitudesMes" class="h2 fw-bold m-0 text-white">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-lg">
+            <div class="card-body p-4">
+                <div class="table-responsive">
+                    <table id="tablaGestionTecnica" class="table table-hover table-dark align-middle w-100">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Folio</th>
+                                <th>Fecha</th>
+                                <th>Solicitante</th>
+                                <th>Ubicaci&oacute;n</th>
+                                <th>Aver&iacute;a</th>
+                                <th>Estado</th>
+                                <th>T&eacute;cnico</th>
+                                <th class="text-end">Acci&oacute;n</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaTecnicoBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalFinalizarConstancia" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content bg-dark text-white border-info">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-info"><i class="bi bi-file-earmark-medical me-2"></i>Finalizar Solicitud — Constancia de Soporte</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="formFinalizarConstancia">
+                    <div class="modal-body">
+                        <input type="hidden" id="fc_seguimiento">
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-warning">DIAGNÓSTICO (requerido)</label>
+                            <textarea id="fc_diagnostico" class="form-control admin-form-input" rows="3" placeholder="Describe el diagnóstico realizado..." required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">RECOMENDACIONES (opcional)</label>
+                            <textarea id="fc_recomendaciones" class="form-control admin-form-input" rows="2" placeholder="Recomendaciones para el usuario..."></textarea>
+                        </div>
+
+                        <hr class="border-secondary opacity-25">
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label small fw-bold mb-0">EQUIPOS ATENDIDOS</label>
+                            <button type="button" id="fc_btnAgregarEquipo" class="btn btn-sm btn-outline-info">
+                                <i class="bi bi-plus-lg"></i> Agregar equipo
+                            </button>
+                        </div>
+                        <div id="fc_listaEquipos"></div>
+                        <p class="text-white-50 small" id="fc_sinEquipos">Ningún equipo agregado — puedes finalizar sin equipos si la solicitud no lo requiere.</p>
+                    </div>
+                    <div class="modal-footer border-secondary">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-info fw-bold px-4">
+                            <i class="bi bi-check-circle me-1"></i> GENERAR CONSTANCIA Y FINALIZAR
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script src="/js/app.js"></script>
+    <script src="/js/finalizar-constancia.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            if (typeof verificarSesion === 'function') verificarSesion();
+            if (typeof actualizarContadoresDashboard === 'function') actualizarContadoresDashboard();
+            if (typeof cargarTicketsTecnico === 'function') cargarTicketsTecnico();
+        });
+    </script>
+</body>
+</html>

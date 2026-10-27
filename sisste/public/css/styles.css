@@ -1,0 +1,176 @@
+/* ================================================= */
+/* 0. DEFINICIÓN DE VARIABLES DE COLOR (INSTITUCIONALES Y NEÓN) */
+/* ================================================= */
+:root {
+    --color-primary: #2e75bb; /* Azul institucional */
+    --color-secondary: #001b92; /* Azul de acento */
+    --color-background-start: #001F3F; /* Azul muy oscuro (Fondo principal) */
+    --color-background-end: #000000; /* Fondo del body (Negro en este caso) */
+    --color-text: #ffffff;
+    --color-box-bg: hsl(209, 23%, 23%); /* Fondo de la tarjeta */
+    --color-border: #fffdfd;
+    --color-box-shadow: rgba(0, 0, 0, 0.3);
+    --color-success: #28a745; /* Verde para el botón Resumen y Modal */
+    --color-success-hover: #218838;
+    --color-info: #38bdf8; /* Azul claro para folios */
+
+    /* Colores Neón para el marco ANIMADO */
+    --color-neon-blue: #1cb4b4;  /* Azul Neón */
+    --color-neon-violet: #8b088b; /* Violeta Neón */
+    --border-thickness: 20px; /* Grosor del marco animado (20px) */
+    --box-border-radius: 10px; /* Radio de la tarjeta */
+}
+
+/* ------------------------------------------------------------------ */
+/* --- 1. DEFINICIÓN DE LA ANIMACIÓN (KEYFRAMES) --- */
+/* ------------------------------------------------------------------ */
+@keyframes neon-diagonal-shift {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+/* ================================================= */
+/* 2. ESTILOS GENERALES Y LAYOUT */
+/* ================================================= */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, var(--color-background-start), var(--color-background-end));
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+}
+
+.login-header {
+    margin-bottom: 20px;
+    color: rgb(255, 255, 255); 
+}
+.institution-name {
+    color: white; 
+    font-size: 2em;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* ================================================= */
+/* 3. CAJA DE LOGIN Y MARCO ANIMADO */
+/* ================================================= */
+.login-box {
+    background: linear-gradient(135deg, var(--color-neon-blue) 0%, var(--color-neon-violet) 50%, var(--color-neon-blue) 100%);
+    background-size: 400% 400%; 
+    animation: neon-diagonal-shift 3s linear infinite; 
+    padding: 40px;
+    border-radius: var(--box-border-radius); 
+    box-shadow: 0 4px 15px var(--color-box-shadow);
+    position: relative; 
+    z-index: 10; 
+}
+
+.login-box::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--border-thickness) * 0.5); 
+    left: calc(var(--border-thickness) * 0.5); 
+    right: calc(var(--border-thickness) * 0.5); 
+    bottom: calc(var(--border-thickness) * 0.5); 
+    background-color: var(--color-box-bg); 
+    border-radius: calc(var(--box-border-radius) - 1px); 
+    z-index: -1;
+    pointer-events: none; 
+}
+
+.login-box h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: var(--color-primary);
+    font-size: 1.5em;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    box-sizing: border-box; 
+    font-size: 16px;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    margin-top: 10px;
+}
+
+/* ================================================= */
+/* 4. BOTONES PERSONALIZADOS Y EXTRAS */
+/* ================================================= */
+.btn-success {
+    background-color: var(--color-success) !important;
+    color: white !important;
+    border: none !important;
+    font-weight: bold;
+}
+
+.btn-success:hover {
+    background-color: var(--color-success-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-sm {
+    padding: 5px 15px;
+    font-size: 0.85em;
+}
+
+/* ================================================= */
+/* 5. ESTILOS PARA EL MODAL DE ÉXITO */
+/* ================================================= */
+.modal-content-custom {
+    background-color: #0f172a !important; /* Fondo azul oscuro profundo */
+    border: 2px solid var(--color-success) !important; /* Borde verde neón */
+    box-shadow: 0 0 25px rgba(40, 167, 69, 0.4); /* Resplandor verde */
+}
+
+#folioSeguimiento {
+    color: var(--color-info); /* Color cian para resaltar el número */
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    letter-spacing: 2px;
+}
+
+.bi-check-circle-fill {
+    filter: drop-shadow(0 0 10px rgba(40, 167, 69, 0.6));
+}
